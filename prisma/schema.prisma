@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum VATRate {
+  ZERO
+  SEVEN
+  NINETEEN
+}
+
+enum InvoiceStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+  NEEDS_REVIEW
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum AuditEntityType {
+  INVOICE
+  TRANSACTION
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model User {
+  id          String        @id @default(cuid())
+  clerkId     String        @unique
+  email       String        @unique
+  companyName String
+  plan        String        @default("FREE")
+  createdAt   DateTime      @default(now())
+  invoices    Invoice[]
+  auditLogs   AuditLog[]
+  transactions Transaction[]
+}
+
+model Invoice {
+  id          String         @id @default(cuid())
+  userId      String
+  vendorName  String
+  amount      String
+  vatAmount   String
+  vatRate     VATRate
+  currency    String         @default("EUR")
+  status      InvoiceStatus  @default(QUEUED)
+  fileUrl     String
+  extractedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  deletedAt   DateTime?
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId, createdAt])
+  @@index([status])
+}
+
+model AuditLog {
+  id         String          @id @default(cuid())
+  entityType AuditEntityType
+  entityId   String
+  action     AuditAction
+  oldValue   Json?
+  newValue   Json?
+  userId     String
+  ipAddress  String?
+  createdAt  DateTime        @default(now())
+  user       User            @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([userId, createdAt])
+  @@map("audit_log")
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  userId      String
+  description String
+  amount      String
+  type        TransactionType
+  category    String
+  date        DateTime
+  invoiceId   String?
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  invoice     Invoice?        @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([userId, date])
+  @@index([invoiceId])
+}
