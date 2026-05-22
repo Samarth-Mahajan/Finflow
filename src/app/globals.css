@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --finflow-bg: #0b0e14;
+  --finflow-sidebar: #0b0e14;
+  --finflow-card: #151921;
+  --finflow-card-elevated: #1a1f2e;
+  --finflow-border: #1e293b;
+  --finflow-text: #ffffff;
+  --finflow-muted: #94a3b8;
+  --finflow-teal: #2dd4bf;
+  --finflow-teal-muted: #14b8a6;
+  --finflow-purple: #7c3aed;
+  --finflow-purple-light: #818cf8;
+  --finflow-red: #f43f5e;
+  --finflow-green: #10b981;
+  --finflow-green-muted: #059669;
+  --finflow-search: #12151c;
+  --finflow-active: rgba(45, 212, 191, 0.08);
+  --finflow-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+
+  --background: var(--finflow-bg);
+  --foreground: var(--finflow-text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-finflow-bg: var(--finflow-bg);
+  --color-finflow-sidebar: var(--finflow-sidebar);
+  --color-finflow-card: var(--finflow-card);
+  --color-finflow-card-elevated: var(--finflow-card-elevated);
+  --color-finflow-border: var(--finflow-border);
+  --color-finflow-text: var(--finflow-text);
+  --color-finflow-muted: var(--finflow-muted);
+  --color-finflow-teal: var(--finflow-teal);
+  --color-finflow-teal-muted: var(--finflow-teal-muted);
+  --color-finflow-purple: var(--finflow-purple);
+  --color-finflow-purple-light: var(--finflow-purple-light);
+  --color-finflow-red: var(--finflow-red);
+  --color-finflow-green: var(--finflow-green);
+  --color-finflow-green-muted: var(--finflow-green-muted);
+  --color-finflow-search: var(--finflow-search);
+  --color-finflow-active: var(--finflow-active);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Inter", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--finflow-bg);
+  color: var(--finflow-text);
+  font-family: var(--font-sans);
+}
+
+/* Thin dark scrollbar for transaction list */
+.finflow-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.finflow-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.finflow-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--finflow-border);
+  border-radius: 4px;
 }
