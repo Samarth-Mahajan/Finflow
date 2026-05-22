@@ -10,7 +10,6 @@
 ![OpenAI](https://img.shields.io/badge/GPT--4o-412991?style=for-the-badge&logo=openai&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-black?style=for-the-badge&logo=vercel)
 
-**[Live Demo](https://finflow-demo.vercel.app)** · **[Report a Bug](https://github.com/yourusername/finflow/issues)** · **[Request Feature](https://github.com/yourusername/finflow/issues)**
 
 </div>
 
