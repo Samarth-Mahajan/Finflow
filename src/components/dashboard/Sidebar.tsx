@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 const mainNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Invoices", href: "/dashboard/invoices", icon: FileText },
+  { name: "Invoices", href: "/invoices", icon: FileText },
   { name: "Transactions", href: "/dashboard/transactions", icon: ArrowLeftRight },
   { name: "Cash Flow", href: "/dashboard/cash-flow", icon: TrendingUp },
   { name: "AI Assistant", href: "/dashboard/ai", icon: Sparkles },

@@ -36,6 +36,12 @@ enum AuditAction {
   DELETE
 }
 
+enum AnomalySeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
 model User {
   id          String        @id @default(cuid())
   clerkId     String        @unique
@@ -49,20 +55,32 @@ model User {
 }
 
 model Invoice {
-  id          String         @id @default(cuid())
-  userId      String
-  vendorName  String
-  amount      String
-  vatAmount   String
-  vatRate     VATRate
-  currency    String         @default("EUR")
-  status      InvoiceStatus  @default(QUEUED)
-  fileUrl     String
-  extractedAt DateTime?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  deletedAt   DateTime?
-  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String           @id @default(cuid())
+  userId            String
+  vendorName        String?
+  amount            String?
+  vatAmount         String?
+  vatRate           VATRate?
+  currency          String           @default("EUR")
+  status            InvoiceStatus    @default(QUEUED)
+  fileUrl           String
+  fileName          String?
+  mimeType          String?
+  invoiceDate       DateTime?
+  invoiceNumber     String?
+  extractionData    Json?
+  rawText           String?
+  overallConfidence String?
+  processingError   String?
+  isAnomaly         Boolean          @default(false)
+  anomalySeverity   AnomalySeverity?
+  anomalyReason     String?
+  reviewedAt        DateTime?
+  extractedAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  deletedAt         DateTime?
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
 
   @@index([userId, createdAt])

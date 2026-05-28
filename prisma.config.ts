@@ -1,10 +1,12 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-const directUrl = process.env["DIRECT_URL"]!;
-console.log("Using URL:", directUrl);
-console.log("URL length:", directUrl?.length);
-console.log("Host check:", directUrl?.split("@")[1]);
+const prismaDatasourceUrl =
+  process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"];
+
+if (!prismaDatasourceUrl) {
+  throw new Error("DIRECT_URL or DATABASE_URL must be set for Prisma.");
+}
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -13,6 +15,6 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: directUrl,
+    url: prismaDatasourceUrl,
   },
 });
